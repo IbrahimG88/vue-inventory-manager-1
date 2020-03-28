@@ -8,7 +8,7 @@
                 <input type="text" v-model="item.brand" placeholder="brand...">
                 <input type="text" v-model="item.category" placeholder="category...">
                 <input type="number" v-model="item.testsPerUnit" placeholder="testsPerUnit...">
-                <input type="nember" v-model="item.testsUsedPerDay" placeholder="testsUsedPerDay...">
+                <input type="number" v-model="item.testsUsedPerDay" placeholder="testsUsedPerDay...">
                 daysTillDepletion: {{ item.testsPerUnit / item.testsUsedPerDay }}
                <input type="submit" value="Submit">
 			</form>
@@ -24,6 +24,7 @@ export default {
     data(){
 		return {
             item:{
+            id:'',
             title: '',
             name: '',
             brand: '',
