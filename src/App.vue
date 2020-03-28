@@ -8,6 +8,7 @@
         <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
         <router-link to="/foo">Go to Foo</router-link>
         <router-link to="/bar">Go to Bar</router-link>
+        <router-link to="/todos">Go to Todos</router-link>
       </p>
       <!-- route outlet -->
       <!-- component matched by the route will render here -->
@@ -18,12 +19,8 @@
 </template>
 
 <script>
-import Todos from './components/Todos';
 
 export default {
-  name: "App",
-  components:{
-    Todos
-  }
+  name: "App"
 };
 </script>
