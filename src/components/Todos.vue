@@ -4,7 +4,8 @@
     <div v-for="todo in allTodos" v-bind:key="todo.id" class="todo">{{ todo.title }}</div>
     <ul>
     <li v-for="item in allInventory" v-bind:key="item.name" class="inventoryItem">
-      <div v-if="hideItem">
+      {{item}}
+      <div v-if="showItem">
       {{ item.name }} 
       </div>
       <div v-if="editing">
@@ -24,7 +25,7 @@ export default {
   data() {
     return {
       editing: false,
-      hideItem: true,
+      showItem: true,
       item: {
         id: "",
         title: "",
@@ -43,9 +44,9 @@ export default {
     ...mapActions(["updateTodo"]),
     editItem(item) {
       this.editing = !this.editing;
-      this.hideItem = !this.hideItem;
+      this.showItem = !this.showItem;
       item.name = this.item.name && this.item.name.trim();
-     // this.updateItem(item);
+      this.updateItem(item);
     }
   },
   computed: mapGetters(["allTodos", "allInventory"])
