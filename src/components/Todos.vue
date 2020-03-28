@@ -3,12 +3,18 @@
       <h3>
           Todos
       </h3>
+      <div v-for= "todo in allTodos" v-bind:key="todo.id"  class="todo">
+		{{ todo.title }}
+	</div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-    name: "Todos"
+    name: "Todos",
+    computed: mapGetters(['allTodos'])
 }
 </script>
 
