@@ -1,5 +1,7 @@
 //import axios from 'axios';
 
+
+
 const state = {
 	todos: [
 		{
@@ -19,7 +21,11 @@ const state = {
             category: "Endocrinology",
             testsPerUnit: "60",
             testsUsedPerDay: "20",
-            daysTillDepletion: "300"
+            get daysTillDepletion () {
+                return this.testsPerUnit/this.testsUsedPerDay;
+        }
+        
+         
         },
         {
             id:2,
