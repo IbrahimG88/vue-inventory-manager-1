@@ -48,11 +48,23 @@ const getters = {
 const actions = {
     addItem({commit}, item)  {
         commit('newItem', item);
-}
+    },
+    updateItem ({ commit }, updItem ) {
+        const item = updItem;
+        commit('updateTodo', item);
+    }
+
 }
 
 const mutations = {
-    newItem:(state, inventoryItem) => state.inventory.push(inventoryItem)
+    newItem:(state, inventoryItem) => 
+    state.inventory.push(inventoryItem),
+    updateItem: (state, updItem) => {
+        const index = state.inventory.findIndex(item => item.id === updItem.id);
+        if (index !== -1) {
+            state.inventory.splice(index,1,updItem);
+        }    
+    }
 };
 
 // state is the same as state: state, getters: getters
