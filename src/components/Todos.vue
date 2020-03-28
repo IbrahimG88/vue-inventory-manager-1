@@ -3,13 +3,15 @@
     <h3>Todos</h3>
     <div v-for="todo in allTodos" v-bind:key="todo.id" class="todo">{{ todo.title }}</div>
     <ul>
+      
     <li v-for="item in allInventory" v-bind:key="item.name" class="inventoryItem">
       {{item}}
+
       <div v-if="showItem">
       {{ item.name }} 
       </div>
       <div v-if="editing">
-        <input  type="text" v-model="item.name">
+        <input  type="text" v-model.lazy="item.name" >
         </div>
         <button @click="editItem">Edit</button>
       </li>
@@ -18,6 +20,7 @@
 </template>
 
 <script>
+
 import { mapGetters, mapActions } from "vuex";
 
 export default {
