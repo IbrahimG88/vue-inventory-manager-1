@@ -9,6 +9,7 @@
         <router-link to="/foo">Go to Foo</router-link>
         <router-link to="/bar">Go to Bar</router-link>
         <router-link to="/todos">Go to Todos</router-link>
+                <router-link to="/addItem">Go to AddItem</router-link>
       </p>
       <!-- route outlet -->
       <!-- component matched by the route will render here -->

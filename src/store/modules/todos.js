@@ -45,9 +45,15 @@ const getters = {
     allInventory: state => state.inventory
 };
 
-const actions = {};
+const actions = {
+    addItem({commit}, item)  {
+        commit('newItem', item);
+}
+}
 
-const mutations = {};
+const mutations = {
+    newItem:(state, inventoryItem) => state.inventory.push(inventoryItem)
+};
 
 // state is the same as state: state, getters: getters
 export default {
