@@ -6,6 +6,9 @@
       <div v-for= "todo in allTodos" v-bind:key="todo.id"  class="todo">
 		{{ todo.title }}
 	</div>
+    <div v-for= "item in allInventory" v-bind:key="item.id"  class="inventoryItem">
+		{{ item }}
+	</div>
   </div>
 </template>
 
@@ -14,7 +17,7 @@ import { mapGetters } from 'vuex';
 
 export default {
     name: "Todos",
-    computed: mapGetters(['allTodos'])
+    computed: mapGetters(['allTodos', 'allInventory'])
 }
 </script>
 

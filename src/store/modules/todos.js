@@ -10,12 +10,33 @@ const state = {
 			id:2,
 			title: 'Todo Two'
 		}
-	]
+    ],
+    inventory:[
+        {
+            id:1,
+            name: "TSH",
+            brand: "Vidas",
+            category: "Endocrinology",
+            testsPerUnit: "60",
+            testsUsedPerDay: "20",
+            daysTillDepletion: "300"
+        },
+        {
+            id:2,
+            name: "B-HCG",
+            brand: "Tosoh",
+            category: "Endocrinology",
+            testsPerUnit: "30",
+            testsUsedPerDay: "10",
+            daysTillDepletion: "600"
+        }
+    ]
 };
 
 // returns the state or part of it
 const getters = {
-    allTodos: state => state.todos
+    allTodos: state => state.todos,
+    allInventory: state => state.inventory
 };
 
 const actions = {};
