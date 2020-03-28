@@ -13,12 +13,13 @@
       <!-- route outlet -->
       <!-- component matched by the route will render here -->
       <router-view></router-view>
-      <Todos />
+      
     </v-content>
   </v-app>
 </template>
 
 <script>
+
 
 export default {
   name: "App"
