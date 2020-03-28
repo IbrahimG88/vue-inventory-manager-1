@@ -12,13 +12,18 @@
       <!-- route outlet -->
       <!-- component matched by the route will render here -->
       <router-view></router-view>
+      <Todos />
     </v-content>
   </v-app>
 </template>
 
 <script>
+import Todos from './components/Todos';
 
 export default {
-  name: "App"
+  name: "App",
+  components:{
+    Todos
+  }
 };
 </script>
