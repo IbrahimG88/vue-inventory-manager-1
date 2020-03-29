@@ -51,7 +51,7 @@ const actions = {
     },
     updateItem ({ commit }, updItem ) {
         const item = updItem;
-        commit('updateTodo', item);
+        commit('updateItem', item);
     }
 
 }
