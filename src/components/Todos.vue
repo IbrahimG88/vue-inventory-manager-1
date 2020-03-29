@@ -17,6 +17,7 @@
     </ul>
     <div v-if="editing">
       {{index}}
+      <!-- we will use the index from data() as given value in editItem(): this.index= index; -->
         <input  type="text" v-model.lazy="allInventory[index].name" >
         <button @click="editItem(item, index)">Edit finished</button>
     </div>
@@ -54,13 +55,18 @@ export default {
     editItem(item, index) {
       console.log("index",index);
       console.log("item to edit all inventry:", this.allInventory[index]);
+      
+      // theconditional rendering:
       this.showAllItems = !this.showAllItems;
       this.editing = !this.editing;
       this.showItem = !this.showItem;
 
       //index from data() = item index clicked:
+      // we use updateItem and passing the item that modifies allInventory[index]
+      // then allInventory is updated => in the template: v-for=(item, index) in allInventory uses
+      // the updated, edited list 
       this.index= index;
-      
+
       this.updateItem(item);
       console.log(this.allInventory);
     }
