@@ -25,6 +25,12 @@
       aria-label="Search for an Item"
       :get-result-value="getResultValue"
     ></autocomplete>
+    <div>
+    <span v-if="showSearch">
+    {{ searchedItem }}
+    </span>
+   <span><i v-if="showSearch" @click="showSearch = !showSearch;" class="fas fa-trash-alt"></i> </span> 
+    </div>
   </div>
 </template>
 
@@ -43,6 +49,8 @@ export default {
       editing: false,
       showItem: true,
       index: null,
+      showSearch: true,
+      searchedItem: '',
       item: {
         id: "",
         title: "",
@@ -81,6 +89,8 @@ export default {
       if (input.length < 1) {
         return [];
       }
+     
+      this.showSearch = true;
 
       return this.allInventory.filter(item => {
         if (item.name.toLowerCase().startsWith(input.toLowerCase())) {
@@ -90,8 +100,7 @@ export default {
       });
     },
     getResultValue(result) {
-      console.log(result.id);
-      
+      this.searchedItem = result;
     }
   },
   computed: mapGetters(["allTodos", "allInventory"])
