@@ -1,6 +1,7 @@
 <template>
   <div>
     <h3>Todos</h3>
+    
     <div v-for="todo in allTodos" v-bind:key="todo.id" class="todo">{{ todo.title }}</div>
     <ul>
       
@@ -21,15 +22,23 @@
         <input  type="text" v-model.lazy="allInventory[index].name" >
         <button @click="editItem(item, index)">Edit finished</button>
     </div>
+    <autocomplete
+    :search="search"
+    placeholder="Search for an Item"
+    aria-label="Search for an Item"
+  ></autocomplete>
   </div>
 </template>
 
 <script>
-
 import { mapGetters, mapActions } from "vuex";
+import Autocomplete from '@trevoreyre/autocomplete-vue';
 
 export default {
   name: "Todos",
+  components:{
+    Autocomplete
+  },
   data() {
     return {
       showAllItems: true,
@@ -69,8 +78,32 @@ export default {
 
       this.updateItem(item);
       console.log(this.allInventory);
+    },
+    search(input) {
+      if (input.length < 1) { return [] }
+      
+      
+      return this.allInventory.filter(item => {
+        
+      if (item.name.toLowerCase()
+          .startsWith(input.toLowerCase())){
+          return item.name.toLowerCase()
+           .startsWith(input.toLowerCase())
+          }
+        if (item.brand.toLowerCase()
+          .startsWith(input.toLowerCase())){
+         return item.brand.toLowerCase()
+           .startsWith(input.toLowerCase());
+        }
+        if (item.category.toLowerCase()
+          .startsWith(input.toLowerCase())){
+        return item.category.toLowerCase()
+           .startsWith(input.toLowerCase());
+        }
+        
+      })
     }
-  },
+    },
   computed: mapGetters(["allTodos", "allInventory"])
 };
 </script>
