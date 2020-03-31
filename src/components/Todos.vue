@@ -7,7 +7,7 @@
     <li  v-for="(item, index) in allInventory" v-bind:key="item.name" class="inventoryItem">
       <div v-if="showAllItems">
       {{item}}
-      
+      <i @click="deleteItem(item.id)" class="fas fa-trash-alt"></i>
       <div v-if="showItem">
       {{ item.name }} 
       </div>
@@ -51,7 +51,7 @@ export default {
     }
     },
   methods: {
-    ...mapActions(["updateItem"]),
+    ...mapActions(["updateItem", "deleteItem"]),
     editItem(item, index) {
       console.log("index",index);
       console.log("item to edit all inventry:", this.allInventory[index]);

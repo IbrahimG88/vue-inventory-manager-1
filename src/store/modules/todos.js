@@ -52,6 +52,11 @@ const actions = {
     updateItem ({ commit }, updItem ) {
         const item = updItem;
         commit('updateItem', item);
+    },
+    deleteItem({ commit }, id) {
+        //const itemToDelete = state.inventory.filter(item =>
+           // item.id == id);
+        commit('removeItem', id)
     }
 
 }
@@ -64,7 +69,9 @@ const mutations = {
         if (index !== -1) {
             state.inventory.splice(index,1,updItem);
         }    
-    }
+    },
+    removeItem: (state, id) => state.inventory = state.inventory.filter(item =>
+         item.id !==id)
 };
 
 // state is the same as state: state, getters: getters
