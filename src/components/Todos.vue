@@ -26,6 +26,7 @@
                      placeholder="select item">
    </model-list-select>
 
+    <!-- to fix the empty curly braces appearing on screen while object empty-->
     <div v-if="Object.keys(objectItem).length !== 0">
       {{ objectItem }}
     </div>
