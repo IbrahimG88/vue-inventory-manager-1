@@ -19,12 +19,13 @@
       <button @click="editItem(item, index)">Edit finished</button>
     </div>
     <!-- vue-search-select component-->
-   <model-list-select :list="options"
+   <model-list-select :list="allInventory"
                      v-model="objectItem"
                      option-value="id"
                      :custom-text="codeAndNameAndDesc"
                      placeholder="select item">
   </model-list-select>
+  {{objectItem}}
    </div>
 </template>
 
@@ -37,14 +38,6 @@ export default {
   name: "Todos",
   data() {
     return {
-      options1: [
-          { code: '01', name: 'aa', desc: 'desc01' },
-          { code: '02', name: 'ab', desc: 'desc02' },
-          { code: '03', name: 'bc', desc: 'desc03' },
-          { code: '04', name: 'cd', desc: 'desc04' },
-          { code: '05', name: 'de', desc: 'desc05' },
-          { code: '06', name: 'ef', desc: 'desc06' }
-        ],
       objectItem: {},
       // the search component data ends here
       showAllItems: true,
@@ -54,30 +47,6 @@ export default {
       hasSaved: false,
       isEditing: null,
       model: null,
-      options:[
-        {
-            id:1,
-            name: "TSH",
-            brand: "Vidas",
-            category: "Endocrinology",
-            testsPerUnit: "60",
-            testsUsedPerDay: "20",
-            get daysTillDepletion () {
-                return this.testsPerUnit/this.testsUsedPerDay;
-        }
-        },
-        {
-            id:2,
-            name: "B-HCG",
-            brand: "Tosoh",
-            category: "Endocrinology",
-            testsPerUnit: "30",
-            testsUsedPerDay: "10",
-            get daysTillDepletion () {
-                return this.testsPerUnit/this.testsUsedPerDay;
-        }
-        }
-      ],
       item: {
         id: "",
         title: "",
@@ -123,6 +92,7 @@ export default {
       selectFromParentComponent1 () {
         // select option from parent component
         this.objectItem = this.options[0]
+
       }
   },
   computed: mapGetters(["allTodos", "allInventory"])
