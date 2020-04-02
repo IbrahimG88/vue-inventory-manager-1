@@ -24,8 +24,12 @@
                      option-value="id"
                      :custom-text="codeAndNameAndDesc"
                      placeholder="select item">
-  </model-list-select>
-  {{objectItem}}
+  </template>
+
+    <div v-if="Object.keys(objectItem).length !== 0">
+      {{ objectItem }}
+    </div>
+  
    </div>
 </template>
 
@@ -39,6 +43,7 @@ export default {
   data() {
     return {
       objectItem: {},
+      showObjectItem: false,
       // the search component data ends here
       showAllItems: true,
       editing: false,
