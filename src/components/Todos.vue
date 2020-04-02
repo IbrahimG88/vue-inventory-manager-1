@@ -24,7 +24,7 @@
                      option-value="id"
                      :custom-text="codeAndNameAndDesc"
                      placeholder="select item">
-  </template>
+   </model-list-select>
 
     <div v-if="Object.keys(objectItem).length !== 0">
       {{ objectItem }}
