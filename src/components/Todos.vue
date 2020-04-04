@@ -44,7 +44,6 @@ export default {
   data() {
     return {
       objectItem: {},
-      showObjectItem: false,
       // the search component data ends here
       showAllItems: true,
       editing: false,
