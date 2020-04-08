@@ -30,7 +30,13 @@
     <div v-if="Object.keys(objectItem).length !== 0">
       {{ objectItem }}
     </div>
-  
+  <div>
+    <button @click="calculateTimeDifference">calculate time</button>
+  </div>
+  <div>
+   DaysTillDepletion: {{item.daysTillDepletion}}
+   <button @click="calculateDaysTillDepletion"> calculate days till depletion</button>
+  </div>
    </div>
 </template>
 
@@ -38,11 +44,18 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { ModelListSelect } from 'vue-search-select'
+import {DateTime}  from "luxon";
+// eslint-disable-next-line no-unused-vars
+import  Interval  from 'luxon/src/interval.js';
 
 export default {
   name: "Todos",
   data() {
     return {
+      //fpr luxon:
+      lastSavedTime: DateTime.local(),
+      duration:0,
+      //
       objectItem: {},
       // the search component data ends here
       showAllItems: true,
@@ -55,12 +68,12 @@ export default {
       item: {
         id: "",
         title: "",
-        name: "",
+        name: "Hello world",
         brand: "",
         category: "",
         testsPerUnit: "",
         testsUsedPerDay: "",
-        daysTillDepletion: ""
+        daysTillDepletion: "300"
       }
     };
   },
@@ -98,6 +111,28 @@ export default {
         // select option from parent component
         this.objectItem = this.options[0]
 
+      },
+      calculateTimeDifference () {
+          let now = DateTime.local();
+          console.log(now);
+         
+          let i = Interval.fromDateTimes(this.lastSavedTime, now);
+          let duration = i.toDuration("seconds").toObject();
+          let seconds = JSON.stringify(duration.seconds);
+          this.duration = seconds;
+          let lastSavedTime = DateTime.local();
+          this.lastSavedTime = lastSavedTime;
+          console.log(seconds);
+          
+      },
+      calculateDaysTillDepletion() {
+        let timePassed = this.duration;
+        console.log("time passed:"+ timePassed);
+        this.allInventory.forEach((item)=> {
+            item.daysTillDepletion = (item.daysTillDepletion - timePassed).toFixed(1);
+          
+            return item;
+        });
       }
   },
   computed: mapGetters(["allTodos", "allInventory"])
