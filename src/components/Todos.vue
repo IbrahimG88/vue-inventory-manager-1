@@ -116,7 +116,20 @@ export default {
     },
     async calculateTimeDifference() {
 
-      let lastSavedTimets = await db.collection("appVariables").orderBy('createdAt').limit(1).get();
+  
+
+      let lastSavedTimets = await db.collection("appVariables").doc("BBCqqInTGJw49nJ8YgSI").get().then(function(doc){
+       
+        
+        //gets the value inside the object
+        console.log('doc.data()',doc.data().lastSavedTimets);
+        return doc.data().lastSavedTimets;
+      });
+
+
+     console.log("ts",lastSavedTimets);
+
+      console.log('firebase object',lastSavedTimets);
       let lastSavedTimedt = DateTime.fromMillis(lastSavedTimets);
       //let now = DateTime.local();
       //timestamp ts
