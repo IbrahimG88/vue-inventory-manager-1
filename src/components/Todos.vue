@@ -119,7 +119,7 @@ export default {
   
 
       let lastSavedTimets = await db.collection("appVariables").doc("BBCqqInTGJw49nJ8YgSI").get().then(function(doc){
-       
+       //working now
         
         //gets the value inside the object
         console.log('doc.data()',doc.data().lastSavedTimets);
