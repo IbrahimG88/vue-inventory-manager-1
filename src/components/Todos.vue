@@ -19,42 +19,45 @@
       <button @click="editItem(item, index)">Edit finished</button>
     </div>
     <!-- vue-search-select component-->
-   <model-list-select :list="allInventory"
-                     v-model="objectItem"
-                     option-value="id"
-                     :custom-text="codeAndNameAndDesc"
-                     placeholder="select item">
-   </model-list-select>
+    <model-list-select
+      :list="allInventory"
+      v-model="objectItem"
+      option-value="id"
+      :custom-text="codeAndNameAndDesc"
+      placeholder="select item"
+    ></model-list-select>
 
     <!-- to fix the empty curly braces appearing on screen while object empty-->
-    <div v-if="Object.keys(objectItem).length !== 0">
-      {{ objectItem }}
+    <div v-if="Object.keys(objectItem).length !== 0">{{ objectItem }}</div>
+    <div>
+      <button @click="calculateTimeDifference">calculate time</button>
     </div>
-  <div>
-    <button @click="calculateTimeDifference">calculate time</button>
+    <div>
+      DaysTillDepletion: {{item.daysTillDepletion}}
+      <button
+        @click="calculateDaysTillDepletion"
+      >calculate days till depletion</button>
+    </div>
   </div>
-  <div>
-   DaysTillDepletion: {{item.daysTillDepletion}}
-   <button @click="calculateDaysTillDepletion"> calculate days till depletion</button>
-  </div>
-   </div>
 </template>
 
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { ModelListSelect } from 'vue-search-select'
-import {DateTime}  from "luxon";
+import { ModelListSelect } from "vue-search-select";
+import { DateTime } from "luxon";
 // eslint-disable-next-line no-unused-vars
-import  Interval  from 'luxon/src/interval.js';
+import Interval from "luxon/src/interval.js";
+import { db } from "@/main";
 
 export default {
   name: "Todos",
   data() {
     return {
       //fpr luxon:
-      lastSavedTime: DateTime.local(),
-      duration:0,
+      //lastSavedTimets: ,
+      //lastSavedTimedt:,
+      duration: 0,
       //
       objectItem: {},
       // the search component data ends here
@@ -101,39 +104,60 @@ export default {
       console.log(this.allInventory);
     },
     //methods for vue-search-select ModelListComponent
-     codeAndNameAndDesc (item) {
-        return `${item.name} - ${item.category} - ${item.brand}`
-      },
-      reset1 () {
-        this.objectItem = {}
-      },
-      selectFromParentComponent1 () {
-        // select option from parent component
-        this.objectItem = this.options[0]
+    codeAndNameAndDesc(item) {
+      return `${item.name} - ${item.category} - ${item.brand}`;
+    },
+    reset1() {
+      this.objectItem = {};
+    },
+    selectFromParentComponent1() {
+      // select option from parent component
+      this.objectItem = this.options[0];
+    },
+    async calculateTimeDifference() {
 
-      },
-      calculateTimeDifference () {
-          let now = DateTime.local();
-          console.log(now);
-         
-          let i = Interval.fromDateTimes(this.lastSavedTime, now);
-          let duration = i.toDuration("seconds").toObject();
-          let seconds = JSON.stringify(duration.seconds);
-          this.duration = seconds;
-          let lastSavedTime = DateTime.local();
-          this.lastSavedTime = lastSavedTime;
-          console.log(seconds);
-          
-      },
-      calculateDaysTillDepletion() {
-        let timePassed = this.duration;
-        console.log("time passed:"+ timePassed);
-        this.allInventory.forEach((item)=> {
-            item.daysTillDepletion = (item.daysTillDepletion - timePassed).toFixed(1);
-          
-            return item;
-        });
-      }
+      let lastSavedTimets = await db.collection("appVariables").orderBy('createdAt').limit(1).get();
+      let lastSavedTimedt = DateTime.fromMillis(lastSavedTimets);
+      //let now = DateTime.local();
+      //timestamp ts
+      // for now
+      let ts = new Date().getTime(); //timestamp 3434324 for firebase
+      let dt = DateTime.fromMillis(ts);//datetime to be used in interval 
+
+
+      console.log("ts", ts);
+        console.log("dt", dt);
+      let i = Interval.fromDateTimes(lastSavedTimedt, dt);
+      let duration = i.toDuration("seconds").toObject();
+      let seconds = JSON.stringify(duration.seconds);
+      this.duration = seconds;
+
+      lastSavedTimets = new Date().getTime();//timestamp 23993294
+      lastSavedTimedt =  DateTime.fromMillis(lastSavedTimets); // datetime
+      
+      //from the data()
+   // this.lastSavedTimets = lastSavedTimets;
+    //  this.lastSavedTimedt = lastSavedTimedt;
+
+      await db.collection("appVariables").add({
+        lastSavedTimets: lastSavedTimets
+      });
+      console.log(seconds);
+    },
+    calculateDaysTillDepletion() {
+      let timePassed = this.duration;
+      console.log("time passed:" + timePassed);
+      this.allInventory.forEach(item => {
+        item.daysTillDepletion = (item.daysTillDepletion - timePassed).toFixed(
+          1
+        );
+
+        return item;
+      });
+    }
+  },
+  mounted() {
+    console.log(this.lastSavedTime);
   },
   computed: mapGetters(["allTodos", "allInventory"])
 };
