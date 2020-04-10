@@ -117,8 +117,18 @@ export default {
     async calculateTimeDifference() {
 
   
-
+/*
       let lastSavedTimets = await db.collection("appVariables").doc("BBCqqInTGJw49nJ8YgSI").get().then(function(doc){
+       //working now
+        
+        //gets the value inside the object
+        console.log('doc.data()',doc.data().lastSavedTimets);
+        return doc.data().lastSavedTimets;
+      });
+      */
+
+      //new change:
+      let lastSavedTimets = await db.collection("appVariables").doc("SavedTimeStamp").get().then(function(doc){
        //working now
         
         //gets the value inside the object
@@ -151,11 +161,16 @@ export default {
       //from the data()
    // this.lastSavedTimets = lastSavedTimets;
     //  this.lastSavedTimedt = lastSavedTimedt;
-
+/*
       await db.collection("appVariables").add({
         lastSavedTimets: lastSavedTimets
       });
       console.log(seconds);
+*/
+    await db.collection("appVariables").doc("SavedTimeStamp").set({
+    lastSavedTimets: lastSavedTimets
+    });
+
     },
     calculateDaysTillDepletion() {
       let timePassed = this.duration;
