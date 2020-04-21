@@ -27,7 +27,7 @@
 <template v-slot:extension>
         <v-tabs align-with-title>
           <v-tab @click="tabLink('/todos')" >Tab 1</v-tab>
-          <v-tab>Tab 2</v-tab>
+          <v-tab @click="tabLink('/inventory')">Inventory</v-tab>
           <v-tab>Tab 3</v-tab>
         </v-tabs>
       </template>
@@ -112,6 +112,7 @@ export default {
           { title: 'Foo', icon: 'mdi-view-dashboard', route:'/foo'},
           { title: 'Photos', icon: 'mdi-image', route:'/todos' },
           { title: 'About', icon: 'mdi-help-box', route:'/bar' },
+          { title: 'Inventory', icon: 'mdi-help-box', route:'/inventory' }
         ],
         color: 'primary',
         colors: [
