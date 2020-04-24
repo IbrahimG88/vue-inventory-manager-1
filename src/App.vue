@@ -112,7 +112,8 @@ export default {
           { title: 'Foo', icon: 'mdi-view-dashboard', route:'/foo'},
           { title: 'Photos', icon: 'mdi-image', route:'/todos' },
           { title: 'About', icon: 'mdi-help-box', route:'/bar' },
-          { title: 'Inventory', icon: 'mdi-help-box', route:'/inventory' }
+          { title: 'Inventory', icon: 'mdi-help-box', route:'/inventory' },
+          { title: 'Inventory2', icon: 'mdi-help-box', route:'/inventory2' }
         ],
         color: 'primary',
         colors: [

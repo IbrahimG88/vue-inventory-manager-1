@@ -5,6 +5,7 @@ import Foo from './components/Foo';
 import Todos from './components/Todos';
 import AddItem from './components/AddItem';
 import Inventory from './components/Inventory';
+import Inventory2 from './components/Inventory2';
 
 
 
@@ -15,7 +16,8 @@ Vue.use(VueRouter);
     { path: '/bar', component: Bar },
     { path: '/todos', component: Todos },
     { path: '/addItem', component: AddItem },
-    { path: '/inventory', component: Inventory }
+    { path: '/inventory', component: Inventory },
+    { path: '/inventory2', component: Inventory2 }
   ];
 
 
