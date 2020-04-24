@@ -1,13 +1,37 @@
 <template>
-<div class="mx-auto search-bar">
- <model-list-select
-            :list="allInventory"
-            v-model="objectItem"
-            option-value="id"
-            :custom-text="nameAndCategoryAndBrand"
-            placeholder="select item"
-          ></model-list-select>
-</div>
+  <div>
+    <div class="mx-auto search-bar">
+      <model-list-select
+        :list="allInventory"
+        v-model="objectItem"
+        option-value="id"
+        :custom-text="nameAndCategoryAndBrand"
+        placeholder="select item"
+      ></model-list-select>
+    </div>
+    <v-card>
+      <v-card-title>
+        Inventory
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+        v-model="selected"
+        :single-select="singleSelect"
+        item-key="name"
+        show-select
+        :headers="headers"
+        :items="desserts"
+        :search="search"
+      ></v-data-table>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -25,10 +49,40 @@ export default {
   data() {
     return {
       objectItem: {},
-      show: false,
-      showCard: false,
-      history: false,
-      prices: false
+      search: "",
+      singleSelect: false,
+      selected: [],
+      headers: [
+        {
+          text: "Inventory item",
+          align: "start",
+          sortable: true,
+          value: "name"
+        },
+        { text: "Calories", value: "calories" },
+        { text: "Fat (g)", value: "fat" },
+        { text: "Carbs (g)", value: "carbs" },
+        { text: "Protein (g)", value: "protein" },
+        { text: "Iron (%)", value: "iron" }
+      ],
+      desserts: [
+        {
+          name: "Frozen Yogurt",
+          calories: 159,
+          fat: 6.0,
+          carbs: 24,
+          protein: 4.0,
+          iron: "1%"
+        },
+        {
+          name: "Ice cream sandwich",
+          calories: 237,
+          fat: 9.0,
+          carbs: 37,
+          protein: 4.3,
+          iron: "1%"
+        }
+      ]
     };
   },
   components: {
