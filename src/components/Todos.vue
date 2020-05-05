@@ -186,6 +186,9 @@ export default {
         item.daysTillDepletion = (item.daysTillDepletion - duration).toFixed(
           1
         );
+        if (item.daysTillDepletion <= 0) {
+          item.daysTillDepletion = 0;
+        }
         this.updateItem(item);
         return item;
       });

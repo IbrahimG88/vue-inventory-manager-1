@@ -33,7 +33,7 @@
         :headers="headers"
         :items="allInventory"
         :search="search"
-        :custom-filter="filterOnlyCapsText"
+        :custom-filter=" filterRemainingDays"
       ></v-data-table>
     </v-card>
   </div>
@@ -87,20 +87,10 @@ export default {
       // select option from parent component
       this.objectItem = this.options[0];
     },
-    filterOnlyCapsText(value, search, item) {
-      console.log("item: ", item.daysTillDepletion);
-      console.log("value: ", value);
-      console.log("search: ", search);
-      /* return value != null &&
-          search != null &&
-          typeof value === 'string' &&
-          value.toString().toLocaleUpperCase().indexOf(search) !== -1
-     */
-      console.log("dtd: ", item.daysTillDepletion);
+    filterRemainingDays(value, search, item) {
         if(search - item.daysTillDepletion >= 0){
             return item;
         }
-       
     }
   },
   computed: mapGetters(["allTodos", "allInventory"])
