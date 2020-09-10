@@ -7,6 +7,7 @@ import AddItem from './components/AddItem';
 import Inventory from './components/Inventory';
 import Inventory2 from './components/Inventory2';
 import Reorder from './components/Reorder';
+import AddStocks from './components/views/AddStocks';
 
 
 
@@ -19,7 +20,8 @@ Vue.use(VueRouter);
     { path: '/addItem', component: AddItem },
     { path: '/inventory', component: Inventory },
     { path: '/inventory2', component: Inventory2 },
-    { path: '/reorder', component: Reorder }
+    { path: '/reorder', component: Reorder },
+    { path: '/stocks', component: AddStocks }
   ];
 
 

@@ -114,7 +114,8 @@ export default {
           { title: 'About', icon: 'mdi-help-box', route:'/bar' },
           { title: 'Inventory', icon: 'mdi-help-box', route:'/inventory' },
           { title: 'Inventory2', icon: 'mdi-help-box', route:'/inventory2' },
-          { title: 'Reorder', icon: 'mdi-help-box', route:'/reorder' }
+          { title: 'Reorder', icon: 'mdi-help-box', route:'/reorder' },
+          { title: 'AddStocks', icon: 'mdi-help-box', route:'/stocks'}
         ],
         color: 'primary',
         colors: [
