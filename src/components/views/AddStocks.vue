@@ -3,7 +3,7 @@
   <div>
     <v-card>
       <v-card-title>
-        Inventory
+        Add Stocks
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
@@ -11,6 +11,7 @@
           label="Search"
           single-line
           hide-details
+          v-if="fillStocks==false"
         ></v-text-field>
       </v-card-title>
       <v-data-table
@@ -21,10 +22,56 @@
         :headers="headers"
         :items="allInventory"
         :search="search"
+        v-if="fillStocks==false"
       ></v-data-table>
-        <v-btn class="ma-2" outlined color="indigo" right fixed :disabled="selected.length < 1">Add new Stocks Data</v-btn>
+      <v-btn
+        class="ma-2"
+        outlined
+        color="indigo"
+        right
+        fixed
+        :disabled="selected.length < 1"
+        @click="fillStocks = !fillStocks"
+        v-if="fillStocks==false"
+      >Add new Stocks Data</v-btn>
     </v-card>
-     </div>
+
+    <v-form v-if="fillStocks">
+      <v-container>
+
+        <div v-for="item in selected" :key=item.id>
+          <v-card>
+          <v-col cols="12" md="3">
+            <v-text-field v-model="item.id" label="Id" required />
+            <v-text-field v-model="item.name" label="Name" required />
+            <v-text-field v-model="item.brand" label="Brand or Instrument" required />
+            <v-text-field v-model="item.category" label="Category" required />
+            <v-text-field v-model="item.testsPerUnit" label="Tests Per Unit" required />
+            <v-text-field v-model="item.testsUsedPerDay" label="Tests Used Per Day" required />
+            daysTillDepletion: {{ item.daysTillDepletion != Infinity && item.daysTillDepletion ? item.daysTillDepletion : "Complete the data" }}
+          </v-col>
+          </v-card>
+          <br>
+        </div>
+        <!--
+        <v-col cols="12" md="3">
+          <v-text-field v-model="item.id" label="Id" required />
+          <v-text-field v-model="item.name" label="Name" required />
+          <v-text-field v-model="item.brand" label="Brand or Instrument" required />
+          <v-text-field v-model="item.category" label="Category" required />
+          <v-text-field v-model="item.testsPerUnit" label="Tests Per Unit" required />
+          <v-text-field v-model="item.testsUsedPerDay" label="Tests Used Per Day" required />
+          <v-text-field v-model="daysTillDepletion" label="Days Till Depletion" />
+        </v-col>
+        -->
+        <v-row>
+          <v-btn color="success" @click="submit">Submit Item</v-btn>
+          <v-col cols="12" md="1"></v-col>
+          <v-btn @click="clear">Clear</v-btn>
+        </v-row>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
@@ -37,9 +84,10 @@ import Interval from "luxon/src/interval.js";
 import { db } from "@/main";
 
 export default {
-    name: 'AddStocks',
-    data() {
+  name: "AddStocks",
+  data() {
     return {
+      fillStocks: false,
       objectItem: {},
       search: "",
       singleSelect: false,
@@ -59,7 +107,7 @@ export default {
       ]
     };
   },
- 
+
   methods: {
     ...mapActions(["updateItem", "deleteItem"]),
     reset1() {
@@ -68,12 +116,24 @@ export default {
     selectFromParentComponent1() {
       // select option from parent component
       this.objectItem = this.options[0];
+    },
+    submit() {
+      console.log("submitted");
+    },
+      clear() {
+      console.log("clear");
     }
-
   },
-  computed: mapGetters(["allTodos", "allInventory"])
+  computed: mapGetters(["allTodos", "allInventory"]),
+      daysTillDepletion() {
+      if(this.item.testsPerUnit != 0 && this.item.testsUsedPerDay != 0){
+      return (this.item.testsPerUnit / this.item.testsUsedPerDay).toFixed(1);
+      }
+      else {
+        return ""
+      }
+    }
 };
-
 </script>
 
 
