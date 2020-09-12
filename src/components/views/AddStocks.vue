@@ -38,20 +38,24 @@
 
     <v-form v-if="fillStocks">
       <v-container>
-
-        <div v-for="item in selected" :key=item.id>
+        <div v-for="item in selected" :key="item.id">
           <v-card>
-          <v-col cols="12" md="3">
-            <v-text-field v-model="item.id" label="Id" required />
-            <v-text-field v-model="item.name" label="Name" required />
-            <v-text-field v-model="item.brand" label="Brand or Instrument" required />
-            <v-text-field v-model="item.category" label="Category" required />
-            <v-text-field v-model="item.testsPerUnit" label="Tests Per Unit" required />
-            <v-text-field v-model="item.testsUsedPerDay" label="Tests Used Per Day" required />
-            daysTillDepletion: {{ item.daysTillDepletion != Infinity && item.daysTillDepletion ? item.daysTillDepletion : "Complete the data" }}
-          </v-col>
+            <v-col cols="12" md="3">
+              <v-text-field v-model="item.id" label="Id" required />
+              <v-text-field v-model="item.name" label="Name" required />
+              <v-text-field v-model="item.brand" label="Brand or Instrument" required />
+              <v-text-field v-model="item.category" label="Category" required />
+              <v-text-field v-model="item.testsPerUnit" label="Tests Per Unit" required />
+              <v-text-field v-model="item.testsUsedPerDay" label="Tests Used Per Day" required />
+              daysTillDepletion: {{ item.daysTillDepletion != Infinity && item.daysTillDepletion ? item.daysTillDepletion : "Complete the data" }}
+            </v-col>
+            <v-col class="d-flex" cols="12" sm="3">
+              <v-text-field v-model="item.name" label="Name" required />
+              <v-select :items="items" item-text="name" item-value="name" v-model="item.amountType" label="Amount in..." solo></v-select>
+            </v-col>
+            {{item.amountType}}
           </v-card>
-          <br>
+          <br />
         </div>
         <!--
         <v-col cols="12" md="3">
@@ -88,6 +92,7 @@ export default {
   data() {
     return {
       fillStocks: false,
+      items: [{"name": "Units"}, {"name": "Tests"}],
       objectItem: {},
       search: "",
       singleSelect: false,
@@ -120,19 +125,18 @@ export default {
     submit() {
       console.log("submitted");
     },
-      clear() {
+    clear() {
       console.log("clear");
     }
   },
   computed: mapGetters(["allTodos", "allInventory"]),
-      daysTillDepletion() {
-      if(this.item.testsPerUnit != 0 && this.item.testsUsedPerDay != 0){
+  daysTillDepletion() {
+    if (this.item.testsPerUnit != 0 && this.item.testsUsedPerDay != 0) {
       return (this.item.testsPerUnit / this.item.testsUsedPerDay).toFixed(1);
-      }
-      else {
-        return ""
-      }
+    } else {
+      return "";
     }
+  }
 };
 </script>
 
