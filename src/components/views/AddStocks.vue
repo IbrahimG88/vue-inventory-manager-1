@@ -48,12 +48,26 @@
               <v-text-field v-model="item.testsPerUnit" label="Tests Per Unit" required />
               <v-text-field v-model="item.testsUsedPerDay" label="Tests Used Per Day" required />
               daysTillDepletion: {{ item.daysTillDepletion != Infinity && item.daysTillDepletion ? item.daysTillDepletion : "Complete the data" }}
+              <br />
             </v-col>
             <v-col class="d-flex" cols="12" sm="3">
-              <v-text-field v-model="item.name" label="Name" required />
-              <v-select :items="items" item-text="name" item-value="name" v-model="item.amountType" label="Amount in..." solo></v-select>
+              <v-text-field v-model="item.newStocks" label="Amount" type="number" required />
+              <v-select
+                :items="items"
+                item-text="name"
+                item-value="name"
+                v-model="item.amountType"
+                label="Amount in..."
+                solo
+              ></v-select>
             </v-col>
             {{item.amountType}}
+            ddddd
+            {{stocksUpdate(item)}}
+
+
+            item added stocks final
+            {{item.addedStocks}}
           </v-card>
           <br />
         </div>
@@ -92,7 +106,8 @@ export default {
   data() {
     return {
       fillStocks: false,
-      items: [{"name": "Units"}, {"name": "Tests"}],
+      stocks: 0,
+      items: [{ name: "Units" }, { name: "Tests" }],
       objectItem: {},
       search: "",
       singleSelect: false,
@@ -127,15 +142,26 @@ export default {
     },
     clear() {
       console.log("clear");
+    },
+    stocksUpdate(item) {
+      console.log("hii");
+      if(item.amountType == "Units") {
+        item.addedStocks = item.newStocks * item.testsPerUnit
+      return item.addedStocks;
+      }
+      else if (item.amountType == "Tests") {
+        item.addedStocks = item.newStocks * item.testsUsedPerDay
+      return item.addedStocks;
+      }
+      else {
+        return ("choose unit");
+      }
+   
     }
   },
-  computed: mapGetters(["allTodos", "allInventory"]),
-  daysTillDepletion() {
-    if (this.item.testsPerUnit != 0 && this.item.testsUsedPerDay != 0) {
-      return (this.item.testsPerUnit / this.item.testsUsedPerDay).toFixed(1);
-    } else {
-      return "";
-    }
+  computed: {
+    ...mapGetters(["allTodos", "allInventory"])
+
   }
 };
 </script>
